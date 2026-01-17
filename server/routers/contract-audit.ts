@@ -57,7 +57,21 @@ export const contractAuditRouter = router({
       }
 
       // Verify user has access
-      const isArtist = ctx.user.role === 'artist' && contract.artistId === ctx.user.id;
+      let isArtist = false;
+      if (ctx.user.role === 'artist') {
+        try {
+          const timeoutPromise = new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('timeout')), 5000)
+          );
+          const artistProfile = await Promise.race([
+            db.getArtistProfileByUserId(ctx.user.id),
+            timeoutPromise
+          ]) as any;
+          isArtist = !!(artistProfile && contract.artistId === artistProfile.id);
+        } catch (error) {
+          isArtist = false;
+        }
+      }
       const isVenue = ctx.user.role === 'venue' && contract.venueId === ctx.user.id;
       const isAdmin = ctx.user.role === 'admin';
 
@@ -121,7 +135,21 @@ export const contractAuditRouter = router({
       }
 
       // Verify user has access
-      const isArtist = ctx.user.role === 'artist' && contract.artistId === ctx.user.id;
+      let isArtist = false;
+      if (ctx.user.role === 'artist') {
+        try {
+          const timeoutPromise = new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('timeout')), 5000)
+          );
+          const artistProfile = await Promise.race([
+            db.getArtistProfileByUserId(ctx.user.id),
+            timeoutPromise
+          ]) as any;
+          isArtist = !!(artistProfile && contract.artistId === artistProfile.id);
+        } catch (error) {
+          isArtist = false;
+        }
+      }
       const isVenue = ctx.user.role === 'venue' && contract.venueId === ctx.user.id;
       const isAdmin = ctx.user.role === 'admin';
 
