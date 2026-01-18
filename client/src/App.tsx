@@ -36,6 +36,10 @@ import SLATrackingDashboard from "./pages/SLATrackingDashboard";
 import ArtistDashboard from "./pages/ArtistDashboard";
 import VenueDashboard from "./pages/VenueDashboard";
 import VenueArtistDiscovery from "./pages/VenueArtistDiscovery";
+import VenueAnalytics from "./pages/VenueAnalytics";
+import VenueEvents from "./pages/VenueEvents";
+import VenueBookingRequests from "./pages/VenueBookingRequests";
+import VenueBilling from "./pages/VenueBilling";
 import CertificateVerification from "./pages/CertificateVerification";
 import ContractNavigation from "./components/ContractNavigation";
 
@@ -75,6 +79,10 @@ function Router() {
       <Route path="/artist-dashboard" component={ArtistDashboard} />
       <Route path="/venue-dashboard" component={VenueDashboard} />
       <Route path="/discover-artists" component={VenueArtistDiscovery} />
+      <Route path="/venue/analytics" component={VenueAnalytics} />
+      <Route path="/venue/events" component={VenueEvents} />
+      <Route path="/venue/booking-requests" component={VenueBookingRequests} />
+      <Route path="/venue/billing" component={VenueBilling} />
       <Route path="/verify-certificate" component={CertificateVerification} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />

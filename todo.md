@@ -2092,3 +2092,36 @@ The Ologywood platform is production-ready with:
 - [ ] Waiting for Manus support to deploy changes to live site
 - [ ] Test mobile login after deployment by Manus
 
+
+
+## NEW Venue-Specific Features (Phase 2)
+
+- [ ] Build Venue Analytics & Insights page (/venue/analytics)
+  - Booking trends and revenue metrics
+  - Most booked artist genres
+  - Peak booking seasons
+  - Artist performance ratings
+  - Budget tracking vs actual spend
+  - ROI analysis by event type
+
+- [ ] Build Venue Events Management page (/venue/events)
+  - Create and manage upcoming events
+  - Event calendar with artist bookings
+  - Event budget and expense tracking
+  - Guest list management
+  - Venue capacity and setup planning
+  - Event promotion tools
+
+- [ ] Build Booking Requests & Negotiations page (/venue/booking-requests)
+  - Incoming booking requests from artists
+  - Counter-offer system
+  - Terms negotiation interface
+  - Contract templates management
+  - Approval workflow
+
+- [ ] Build Venue Billing & Payments page (/venue/billing)
+  - Invoice management
+  - Payment history
+  - Subscription management
+  - Refund tracking
+  - Tax documents
