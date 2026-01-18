@@ -19,10 +19,13 @@ interface Contract {
 }
 
 export const VenueDashboard: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'contracts' | 'events'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'contracts' | 'events' | 'favorites'>('overview');
   
   // Fetch contracts using TRPC
   const { data: contractsData, isLoading, error } = trpc.contractManagement.getVenueContracts.useQuery();
+  
+  // Fetch favorited artists
+  const { data: favoritesData } = trpc.favorites.getVenueFavorites.useQuery();
   
   const contracts: Contract[] = contractsData?.map((c: any) => ({
     id: c.id.toString(),
@@ -216,6 +219,12 @@ export const VenueDashboard: React.FC = () => {
           >
             Events
           </button>
+          <button
+            className={`tab-button ${activeTab === 'favorites' ? 'active' : ''}`}
+            onClick={() => setActiveTab('favorites')}
+          >
+            Favorites ({favoritesData?.length || 0})
+          </button>
         </div>
 
         <div className={`tab-content ${activeTab === 'overview' ? 'active' : ''}`}>
@@ -268,6 +277,79 @@ export const VenueDashboard: React.FC = () => {
           <div style={{ padding: '40px', textAlign: 'center', color: '#6b7280' }}>
             <p>Events calendar feature coming soon</p>
           </div>
+        </div>
+
+        <div className={`tab-content ${activeTab === 'favorites' ? 'active' : ''}`}>
+          {!favoritesData || favoritesData.length === 0 ? (
+            <div style={{ padding: '40px', textAlign: 'center', color: '#6b7280' }}>
+              <p>No favorited artists yet</p>
+              <a href="/discover-artists" style={{
+                color: '#7c3aed',
+                textDecoration: 'none',
+                fontWeight: '600',
+                marginTop: '10px',
+                display: 'inline-block'
+              }}>
+                Discover Artists →
+              </a>
+            </div>
+          ) : (
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+              gap: '20px'
+            }}>
+              {favoritesData.map((artist: any) => (
+                <div key={artist.id} style={{
+                  background: 'white',
+                  padding: '20px',
+                  borderRadius: '8px',
+                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s'
+                }} onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }} onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}>
+                  <h3 style={{ margin: '0 0 10px 0', color: '#1f2937' }}>
+                    {artist.artistName}
+                  </h3>
+                  <p style={{ color: '#6b7280', margin: '0 0 10px 0', fontSize: '14px' }}>
+                    {artist.bio?.substring(0, 100)}...
+                  </p>
+                  {artist.genres && artist.genres.length > 0 && (
+                    <div style={{ marginBottom: '10px' }}>
+                      {artist.genres.slice(0, 2).map((genre: string) => (
+                        <span key={genre} style={{
+                          display: 'inline-block',
+                          background: '#f3f4f6',
+                          color: '#374151',
+                          padding: '4px 8px',
+                          borderRadius: '4px',
+                          fontSize: '12px',
+                          marginRight: '6px',
+                          marginBottom: '6px'
+                        }}>
+                          {genre}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  <a href={`/artist/${artist.id}`} style={{
+                    color: '#7c3aed',
+                    textDecoration: 'none',
+                    fontSize: '14px',
+                    fontWeight: '600'
+                  }}>
+                    View Profile →
+                  </a>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

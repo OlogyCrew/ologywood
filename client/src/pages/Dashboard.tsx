@@ -361,9 +361,23 @@ export default function Dashboard() {
                   <div className="text-center py-8 text-muted-foreground">
                     <p className="mb-4">No bookings yet</p>
                     {isVenue && (
-                      <a href="/browse" className="no-underline">
+                      <div className="flex gap-2 justify-center">
+                        <a href="/discover-artists" className="no-underline">
+                          <Button>
+                            Discover Artists
+                          </Button>
+                        </a>
+                        <a href="/venue-dashboard" className="no-underline">
+                          <Button variant="outline">
+                            Venue Dashboard
+                          </Button>
+                        </a>
+                      </div>
+                    )}
+                    {isArtist && (
+                      <a href="/artist-dashboard" className="no-underline">
                         <Button>
-                          Browse Artists
+                          Artist Dashboard
                         </Button>
                       </a>
                     )}
